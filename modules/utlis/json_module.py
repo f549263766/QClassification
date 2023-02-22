@@ -32,11 +32,11 @@ def load_json(json_file, start=0, end=-1, interval=50000):
 
 def save_json(json_file, data_list, interval=50000):
     """Save json file
-        Args:
-            json_file (str, required): Json file of path for saving.
-            data_list (list, required): Data list for saving to json file.
-            interval (int, optional): Interval between printing information. Defaults to 50000.
-        """
+    Args:
+        json_file (str, required): Json file of path for saving.
+        data_list (list, required): Data list for saving to json file.
+        interval (int, optional): Interval between printing information. Defaults to 50000.
+    """
     with open(json_file, 'w') as fid:
         for i, data in enumerate(data_list):
             try:
