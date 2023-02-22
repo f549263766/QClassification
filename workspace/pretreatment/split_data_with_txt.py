@@ -13,7 +13,6 @@ from modules.utlis import set_random_seed, get_root_logger
 
 def config_parse():
     """Input config from cmd line.
-
     Return:
         :obj: 'parses.parse_args()': The dict of namespace for config.
     """
