@@ -17,7 +17,7 @@ def rm_suffix(s, suffix=None):
         s (str, required): Enter the string to be processed.
         suffix (str, optional): Postfix Expression. Default to None.
     Return:
-        str: string with the specified suffix removed.
+        :str: string with the specified suffix removed.
     """
     if suffix is None:
         return s[:s.rfind('.')]
@@ -30,7 +30,8 @@ def calculate_md5(file_path, chunk_size=1024 * 1024):
     Args:
         file_path (str, required): Enter the path of the file to be calculated.
         chunk_size (int, optional): Read the size of binary file block. Default to 1024 * 1024.
-    :return:
+    Return:
+        :str: hash encrypted string.
     """
     md5 = hashlib.md5()
     with open(file_path, 'rb') as f:
@@ -46,7 +47,7 @@ def check_md5(file_path, md5, **kwargs):
         file_path (str, required): Enter the path of the file to be calculated.
         md5 (int, required): Md5 validation value.
     Return:
-        bool: is the file md5 value correct.
+        :bool: is the file md5 value correct.
     """
     return md5 == calculate_md5(file_path, **kwargs)
 
@@ -57,7 +58,7 @@ def check_integrity(file_path, md5=None):
         file_path (str, required): Enter the path of the file to be calculated.
         md5 (int, optional): Md5 validation value. Default to None.
     Return:
-        bool: is the file complete.
+        :bool: is the file complete.
     """
     if not osp.isfile(file_path):
         return False
@@ -120,7 +121,6 @@ def extract_archive(from_path, to_path=None, remove_finished=False):
         to_path (str, optional): Output path of compressed package decompression. Default to None.
         remove_finished (bool, optional): Whether to delete the compressed package after decompression.
             Default to False.
-    :return:
     """
     if to_path is None:
         to_path = osp.dirname(from_path)

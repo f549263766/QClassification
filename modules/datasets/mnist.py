@@ -20,7 +20,7 @@ def open_maybe_compressed_file(path):
     Args:
         path (str, required): Path and ends with '.gz' or '.xz'.
     Return:
-        obj: open file object.
+        :obj: open file object.
     """
     if not isinstance(path, str):
         return path
@@ -40,7 +40,7 @@ def read_sn3_pascal_vincent_tensor(path, strict=True):
         path (str, required): Argument may be a filename, compressed filename, or file object.
         strict (bool, optional): Whether to read strictly. Default to True.
     Return:
-        torch.Tensor: Tensor of reading file.
+        :torch.Tensor: Tensor of reading file.
     """
     # check and set typemap properties
     if not hasattr(read_sn3_pascal_vincent_tensor, 'typemap'):
@@ -71,11 +71,11 @@ def read_sn3_pascal_vincent_tensor(path, strict=True):
 
 def read_label_file(path):
     """Read label file from path.
-        Args:
-            path (str, required): Path of label file.
-        Return:
-            torch.Tensor: Tensor of label file from path.
-        """
+    Args:
+        path (str, required): Path of label file.
+    Return:
+        :torch.Tensor: Tensor of label file from path.
+    """
     with open(path, 'rb') as f:
         x = read_sn3_pascal_vincent_tensor(f, strict=False)
     assert (x.dtype == torch.uint8)
@@ -89,7 +89,7 @@ def read_image_file(path):
     Args:
         path (str, required): Path of image file.
     Return:
-        torch.Tensor: Tensor of image file from path.
+        :torch.Tensor: Tensor of image file from path.
     """
     with open(path, 'rb') as f:
         x = read_sn3_pascal_vincent_tensor(f, strict=False)

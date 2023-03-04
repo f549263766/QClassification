@@ -67,7 +67,7 @@ class BaseDataset(Dataset, metaclass=ABCMeta):
         """Map mapping class name to class index.
 
         Return:
-            dict: mapping from class name to class index.
+            :dict: mapping from class name to class index.
         """
 
         return {class_name: i for i, class_name in enumerate(self.CLASSES)}
@@ -76,7 +76,7 @@ class BaseDataset(Dataset, metaclass=ABCMeta):
         """Get all ground-truth labels (categories).
 
         Return:
-            np.ndarray: categories for all images.
+            :np.ndarray: categories for all images.
         """
 
         gt_labels = np.array([data['gt_label'] for data in self.data_infos])
@@ -88,7 +88,7 @@ class BaseDataset(Dataset, metaclass=ABCMeta):
         Args:
             idx (int, required): Index of data.
         Return:
-            list[int]: Image category of specified index.
+            :list[int]: Image category of specified index.
         """
 
         return [int(self.data_infos[idx]['gt_label'])]
@@ -98,7 +98,7 @@ class BaseDataset(Dataset, metaclass=ABCMeta):
         Args:
             idx (int, required): Index of data.
         Return:
-            callable: The data with pipeline.
+            :callable: The data with pipeline.
         """
         results = copy.deepcopy(self.data_infos[idx])
 
@@ -108,7 +108,7 @@ class BaseDataset(Dataset, metaclass=ABCMeta):
         """Get the length of dataset.
 
         Return:
-            int: The length of dataset.
+            :int: The length of dataset.
         """
 
         return len(self.data_infos)
@@ -118,7 +118,7 @@ class BaseDataset(Dataset, metaclass=ABCMeta):
         Args:
             idx (int, required): Index of data.
         Return:
-            data: Indexed data
+            :data: Indexed data
         """
 
         return self.prepare_data(idx)
@@ -132,7 +132,7 @@ class BaseDataset(Dataset, metaclass=ABCMeta):
                 If classes is a string, take it as a file name. The file contains the name of classes where each line
                 contains one class name. If classes is a tuple or list, override the CLASSES defined by the dataset.
         Returns:
-            tuple[str] or list[str]: Names of categories of the dataset.
+            :tuple[str] or list[str]: Names of categories of the dataset.
         """
         if classes is None:
             return cls.CLASSES
