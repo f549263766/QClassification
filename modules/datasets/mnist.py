@@ -170,7 +170,7 @@ class MNIST(BaseDataset):
 
     @master_only
     def download(self):
-        os.makedirs(self.data_prefix, exist_ok=True)
+        os.makedirs(self.data_path_prefix, exist_ok=True)
 
         # download files
         for url, md5 in self.resources.values():
@@ -178,34 +178,28 @@ class MNIST(BaseDataset):
             filename = url.rpartition('/')[2]
             download_and_extract_archive(
                 url,
-                download_root=self.data_prefix,
+                download_root=self.data_path_prefix,
                 filename=filename,
                 md5=md5)
 
 
-if __name__ == '__main__':
-    # dataset settings
-    dataset_type = 'MNIST'
-    img_norm_cfg = dict(mean=[33.46], std=[78.87], to_rgb=True)
-    train_pipeline = [
-        dict(type='Resize', size=32),
-        dict(type='Normalize', **img_norm_cfg),
-        dict(type='ImageToTensor', keys=['img']),
-        dict(type='ToTensor', keys=['gt_label']),
-        dict(type='Collect', keys=['img', 'gt_label']),
+@DATASETS.register_module()
+class FashionMNIST(MNIST):
+    """Fashion-MNIST <https://github.com/zalandoresearch/fashion-mnist>`_Dataset.
+    """
+
+    resource_prefix = 'http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/'
+    resources = {
+        'train_image_file':
+            ('train-images-idx3-ubyte.gz', '8d4fb7e6c68d591d4c3dfef9ec88bf0d'),
+        'train_label_file':
+            ('train-labels-idx1-ubyte.gz', '25c81989df183df01b3e8a0aad5dffbe'),
+        'test_image_file':
+            ('t10k-images-idx3-ubyte.gz', 'bef4ecab320f06d8554ea6380940ec79'),
+        'test_label_file':
+            ('t10k-labels-idx1-ubyte.gz', 'bb300cfdad3c16e7a12a480ee83cd310')
+    }
+    CLASSES = [
+        'T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal',
+        'Shirt', 'Sneaker', 'Bag', 'Ankle boot'
     ]
-    test_pipeline = [
-        dict(type='Resize', size=32),
-        dict(type='Normalize', **img_norm_cfg),
-        dict(type='ImageToTensor', keys=['img']),
-        dict(type='Collect', keys=['img']),
-    ]
-    data = dict(
-        samples_per_gpu=128,
-        workers_per_gpu=2,
-        train=dict(
-            type=dataset_type, data_prefix='data/mnist', pipeline=train_pipeline),
-        val=dict(
-            type=dataset_type, data_prefix='data/mnist', pipeline=test_pipeline),
-        test=dict(
-            type=dataset_type, data_prefix='data/mnist', pipeline=test_pipeline))
